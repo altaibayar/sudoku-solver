@@ -18,6 +18,7 @@ public class Sudoku
 	{
 		final Character[] allowedChars = new Character[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };		
 		
+		values = new HashMap<Integer, HashSet<Character>>();
 		for(int i = 0; i < N; i++)
 		{
 			for(int j = 0; j < N; j++)
@@ -31,7 +32,20 @@ public class Sudoku
 		}
 	}
 
-	private HashSet<Character> get(int i, int j) { return values.get(key(i, j)); }
+	private HashSet<Character> get(int i, int j) 
+	{ 
+		return values.get(key(i, j)); 
+	}
+	
+	public void set(int i, int j, char ch)
+	{
+		if(ch == '0') return;
+		
+		HashSet<Character> set = get(i, j);
+		set.clear();
+		
+		set.add(ch);
+	}
 	
 	private int key(int i, int j) { return i * N + j; }
 	
@@ -44,7 +58,9 @@ public class Sudoku
 		{
 			for(int j = 0; j < N; j++)
 			{
-				result.put(key(i, j), get(i, j).clone());
+				result.values.clear();
+				for(Character ch : get(i, j))
+					result.values.get(key(i, j)).add(ch);
 			}
 		}
 		

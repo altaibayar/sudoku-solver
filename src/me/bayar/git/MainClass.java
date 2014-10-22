@@ -13,9 +13,9 @@ public class MainClass
 		Sudoku sudoku = readFile(inputPath);
 		SudokuSolver solver = new SudokuSolver();
 		
-		if(solver.solve(sudoku))
+		if((sudoku = solver.solve(sudoku)) != null)
 		{
-			System.out.println("Soduku result:");
+			System.out.println("Sudoku result:");
 			System.out.println(sudoku.toString());
 		}
 		else
@@ -48,8 +48,7 @@ public class MainClass
 					
 					for (int j = 0; j < Sudoku.N; j++)
 					{
-						byte val = Byte.parseByte(splt[j]);
-						result.set(i, j, val);
+						result.set(i, j, splt[j].charAt(0));
 					}
 				}
 				
