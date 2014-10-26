@@ -1,30 +1,48 @@
 package me.bayar.git;
 
+import java.util.HashSet;
+
 public class SudokuSolver 
 {
-	public Sudoku solve(Sudoku sudoku)
+	public Sudoku solve(Sudoku current) 
 	{
+		int minCount = 10;
+		Sudoku.Cell minCell = null;
 
-		return null;
-	}
-	
-	private void set(Sudoku sudoku)
-	{
-		int minI, minJ;
-		
-		for (int i = 0; i < Sudoku.N; i++)
+		/* get cell with minimum size */
+		for (int i = 0; i < Sudoku.N; i++) 
 		{
-			for(int j = 0; j < Sudoku.N; j++)
+			for (int j = 0; j < Sudoku.N; j++) 
 			{
-				
+				int possibilityCount = current.get(i, j).getPossibilityCount();
+				if (possibilityCount > 1 && possibilityCount < minCount) 
+				{
+					minCell = current.get(i, j);
+					minCount = possibilityCount;
+				}
 			}
 		}
-	}
-	
-	private boolean relax(Sudoku sudoku, int i, int j)
-	{
+
+		if (minCell != null) 
+		{
+			HashSet<Character> contents = minCell.getContents();
+			for (Character ch : contents) 
+			{
+				Sudoku newSudoku = (Sudoku) current.clone();
+
+				if (newSudoku.set(minCell.getI(), minCell.getJ(), ch))
+				{
+					Sudoku result = null;
+					if ((result = solve(newSudoku)) != null)
+						return result;
+				}
+			}
+		} 
+		else if(current.isValid())
+		{
+			return current;
+		}
 		
-	}
-	
-	
+		return null;
+	}	
 }

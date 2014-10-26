@@ -8,14 +8,13 @@ public class MainClass
 {
 	public static void main(String[] args) throws Exception
 	{	
-		final String inputPath = "input.csv";
+		final String inputPath = "input3.csv";
 
 		Sudoku sudoku = readFile(inputPath);
 		SudokuSolver solver = new SudokuSolver();
 		
 		if((sudoku = solver.solve(sudoku)) != null)
 		{
-			System.out.println("Sudoku result:");
 			System.out.println(sudoku.toString());
 		}
 		else
@@ -47,8 +46,12 @@ public class MainClass
 						throw new Exception("Line is corrupted.");
 					
 					for (int j = 0; j < Sudoku.N; j++)
-					{
-						result.set(i, j, splt[j].charAt(0));
+					{						
+						char ch = splt[j].charAt(0);
+						if(ch != '0' && !result.set(i, j, ch))
+						{
+							throw new Exception("Input sudoku is invalid");
+						}
 					}
 				}
 				
