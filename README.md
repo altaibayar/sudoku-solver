@@ -1,4 +1,4 @@
 sudoku-solver
 =============
 
-sudoku solver ( java )
+sudoku solver ( java ) as constraint propagation
